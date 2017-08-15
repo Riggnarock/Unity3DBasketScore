@@ -21,7 +21,6 @@ public class updateScore : MonoBehaviour {
 		if (Input.mousePresent && Input.GetKeyDown ("mouse 0")) {
 			if (touchInsideObject (Input.mousePosition)) {
 				updateScoreText ();
-
 			}
 		}
 
