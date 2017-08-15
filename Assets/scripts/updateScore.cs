@@ -7,6 +7,7 @@ public class updateScore : MonoBehaviour {
 
 	// Touch control
 	bool validTouch;
+	Vector2 lastTouchPosition;
 
 	// Use this for initialization
 	void Start () {
@@ -36,7 +37,12 @@ public class updateScore : MonoBehaviour {
 					updateScoreText ();
 				}
 			}
-		}
+			//lastTouchPosition = touch.position;
+		} /*else if (validTouch) {
+			validTouch = false;
+			if (touchInsideObject (lastTouchPosition))
+				updateScoreText ();
+		}*/
 
 		// Multi touch
 		/*foreach (Touch touch in Input.touches) {

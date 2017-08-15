@@ -11,6 +11,7 @@ public class timer : MonoBehaviour {
 
 	// Touch control
 	bool validTouch;
+	Vector2 lastTouchPosition;
 
 	// Text Object
 	private Text textClock;
@@ -33,11 +34,11 @@ public class timer : MonoBehaviour {
 					validTouch = true;
 				}
 			}
-			else if (touch.phase == TouchPhase.Ended && touch.phase != TouchPhase.Canceled) {
-				if (validTouch && touchInsideObject (touch.position)) {
-					stopped = !stopped;
-				}
-			}
+			lastTouchPosition = touch.position;
+		} else if (validTouch) {
+			validTouch = false;
+			if (touchInsideObject (lastTouchPosition))
+				stopped = !stopped;
 		}
 
 		if (!stopped) {
