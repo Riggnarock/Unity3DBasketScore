@@ -21,6 +21,7 @@ public class showMillis : MonoBehaviour {
 			time_elapsed -= Time.deltaTime;
 			int decimal_part = (int)((time_elapsed - (int)time_elapsed) * 100);
 			string millis = decimal_part.ToString ().PadLeft (2, '0');
+
 			textClock.text = millis;
 		}
 	}

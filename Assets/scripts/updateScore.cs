@@ -32,17 +32,13 @@ public class updateScore : MonoBehaviour {
 				if (touchInsideObject (touch.position)) {
 					validTouch = true;
 				}
-			} else if (touch.phase == TouchPhase.Ended && touch.phase != TouchPhase.Canceled) {
-				if (validTouch && touchInsideObject (touch.position)) {
-					updateScoreText ();
-				}
 			}
-			//lastTouchPosition = touch.position;
-		} /*else if (validTouch) {
+			lastTouchPosition = touch.position;
+		} else if (validTouch) {
 			validTouch = false;
 			if (touchInsideObject (lastTouchPosition))
 				updateScoreText ();
-		}*/
+		}
 
 		// Multi touch
 		/*foreach (Touch touch in Input.touches) {
