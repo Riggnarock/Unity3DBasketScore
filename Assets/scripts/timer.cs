@@ -9,6 +9,10 @@ public class timer : MonoBehaviour {
 	int minutes;
 	bool stopped;
 
+	// Touch control
+	bool validTouch;
+	Vector2 lastTouchPosition;
+
 	// Text Object
 	private Text textClock;
 
@@ -16,15 +20,33 @@ public class timer : MonoBehaviour {
 	void Start () {
 		minutes = 10;
 		time_elapsed = minutes * 60;
-		stopped = false;
+		stopped = true;
 
 		textClock = GetComponent<Text> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (Input.touchCount > 0) {
+			Touch touch = Input.touches [0];
+			if (touch.phase == TouchPhase.Began && touch.phase != TouchPhase.Canceled) {
+				if (touchInsideObject (touch.position)) {
+					validTouch = true;
+				}
+			}
+			lastTouchPosition = touch.position;
+		} else if (validTouch) {
+			validTouch = false;
+			if (touchInsideObject (lastTouchPosition))
+				stopped = !stopped;
+		}
+
 		if (!stopped) {
 			time_elapsed -= Time.deltaTime;
+			if (time_elapsed < 0) {
+				time_elapsed = 0;
+				stopped = true;
+			}
 			string minute = timeFormat ((int)(time_elapsed / 60));
 			string second = timeFormat ((int)(time_elapsed % 60));
 
@@ -37,5 +59,13 @@ public class timer : MonoBehaviour {
 	 */
 	private string timeFormat(int n) {
 		return n.ToString ().PadLeft (2, '0');
+	}
+
+	private bool touchInsideObject(Vector2 p) {
+		Text textObject = GetComponent<Text> ();
+		return (p.x >= textObject.rectTransform.position.x - textObject.rectTransform.rect.width / 2
+			&& p.x <= textObject.rectTransform.position.x + textObject.rectTransform.rect.width / 2
+			&& p.y >= textObject.rectTransform.position.y - textObject.rectTransform.rect.height / 2
+			&& p.y <= textObject.rectTransform.position.y + textObject.rectTransform.rect.height / 2);
 	}
 }
